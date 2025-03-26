@@ -68,6 +68,14 @@ public class ScaleDegree extends Note {
 		return INTERVALS[clampedToOctave] + octaveMark;
 	}
 
+	public boolean isDiatonic() {
+		int pitchClass = toMIDI() - 12 * (getOctave() + 1);
+
+		if (pitchClass > 4) pitchClass++;
+
+		return pitchClass % 2 == 0;
+	}
+
 
 //	public boolean has(int interval) {
 //		for (chords.Note note : notes) {

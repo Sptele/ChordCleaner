@@ -126,9 +126,11 @@ public class Theorist {
 			if (predicates.hasMinorSecond()) chordStr.append(FLAT.of(9)); // b9
 			if (predicates.hasMajorSix()) chordStr.append(ADDITIONS.of(6)); // Six
 		} else {
-			// No Fifth --> All notes are add notes
+			// No Fifth --> All diatonic notes are add notes
 			for (ScaleDegree note : notes) {
 				// TODO: FIX | chordStr.append("add", 5).append(note.getScaleDegree(), 5);
+
+				if (note.isDiatonic()) chordStr.append(ADDITIONS.of(0 /* Some number... zzzzz */));
 			}
 		}
 

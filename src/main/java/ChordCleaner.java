@@ -3,39 +3,39 @@ import chords.Chord;
 import chords.Note;
 import theory.Theorist;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Scanner;
+
 public class ChordCleaner {
 	public static void main(String[] args) {
 
 
-		Chord c = new Chord();
+		Scanner scan = new Scanner(System.in);
+		String inp = "";
 
-		c.addNote(new Note('C', Accidental.NATURAL, 3));
-		c.addNote(new Note('D', Accidental.FLAT, 3));
-		c.addNote(new Note('D', Accidental.NATURAL, 3));
-		c.addNote(new Note('E', 3));
-		c.addNote(new Note('F', Accidental.NATURAL, 3));
-		c.addNote(new Note('G', Accidental.FLAT, 3));
-		c.addNote(new Note('A', 3));
-		c.addNote(new Note('B', Accidental.FLAT, 3));
+		while (true) {
+			System.out.println("Enter some chords. Type jazz to analyze the given chord. Type exit to leave.");
 
-		Theorist theory = new Theorist(c);
+			Chord c = new Chord();
 
-		System.out.println(theory.getChordValue());
-		System.out.println(c);
+			inp = scan.nextLine();
 
-		System.out.println();
+			if (inp.equals("exit")) return;
 
-		c.clear();
+			while (!inp.equals("jazz")) {
+				c.addNote(interpret(inp));
+				inp = scan.nextLine();
+			}
 
-		String[] notes = { "Bb3", "Db4", "F4", "F#4", "A4", "Ab4" };
-		for (String note : notes) {
-			c.addNote(interpret(note));
+			Theorist theory = new Theorist(c);
+
+			System.out.println(theory.getChordValue());
+			System.out.println(c);
+
+			System.out.println();
+
 		}
-
-		theory = new Theorist(c);
-
-		System.out.println(theory.getChordValue());
-		System.out.println(c);
 
 	}
 

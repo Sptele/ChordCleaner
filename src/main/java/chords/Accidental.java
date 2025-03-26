@@ -1,5 +1,7 @@
 package chords;
 
+import javax.accessibility.AccessibleIcon;
+
 public enum Accidental implements IAccidental {
 	DOUBLE_FLAT {
 		@Override
@@ -47,5 +49,15 @@ public enum Accidental implements IAccidental {
 		public int pitchMod() {
 			return 2;
 		}
+	};
+
+	public static Accidental from(String aStr) {
+		return switch (aStr) {
+			case "♭♭", "bb" -> DOUBLE_FLAT;
+			case "♭", "b" -> FLAT;
+			case "#" -> SHARP;
+			case "##" -> DOUBLE_SHARP;
+			default -> NATURAL;
+		};
 	}
 }

@@ -55,6 +55,10 @@ public class Chord {
 		return notes.first();
 	}
 
+	public void clear() {
+		notes.clear();
+	}
+
 	@Override
 	public String toString() {
 		return notes.toString();

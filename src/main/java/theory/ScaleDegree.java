@@ -3,7 +3,7 @@ package theory;
 import chords.Accidental;
 import chords.Note;
 
-public class TheoristNote extends Note {
+public class ScaleDegree extends Note {
 
 	private int scaleDegree; // # of semitones from root
 
@@ -23,25 +23,25 @@ public class TheoristNote extends Note {
 			"P8"   // Octave - 12
 	};
 
-	public TheoristNote() {
+	public ScaleDegree() {
 		this.scaleDegree = -1;
 	}
 
-	public TheoristNote(int scaleDegree) {
+	public ScaleDegree(int scaleDegree) {
 		this.scaleDegree = scaleDegree;
 	}
 
-	public TheoristNote(char note, int octave, int scaleDegree) {
+	public ScaleDegree(char note, int octave, int scaleDegree) {
 		super(note, octave);
 		this.scaleDegree = scaleDegree;
 	}
 
-	public TheoristNote(char note, Accidental accidental, int octave, int scaleDegree) {
+	public ScaleDegree(char note, Accidental accidental, int octave, int scaleDegree) {
 		super(note, accidental, octave);
 		this.scaleDegree = scaleDegree;
 	}
 
-	public TheoristNote(Note note) {
+	public ScaleDegree(Note note) {
 		this(note.getNote(), note.getAccidental(), note.getOctave(), -1);
 	}
 
@@ -53,7 +53,7 @@ public class TheoristNote extends Note {
 		this.scaleDegree = scaleDegree;
 	}
 
-	public void setScaleDegree(TheoristNote root) {
+	public void setScaleDegree(ScaleDegree root) {
 		setScaleDegree(
 				compareTo(root)
 		);
@@ -92,7 +92,7 @@ public class TheoristNote extends Note {
 		if (o == null || getClass() != o.getClass()) return false;
 		if (!super.equals(o)) return false;
 
-		TheoristNote that = (TheoristNote) o;
+		ScaleDegree that = (ScaleDegree) o;
 
 		return scaleDegree == that.scaleDegree;
 	}

@@ -31,19 +31,46 @@ public class TheoristPredicates {
 		return has[3] || has[4];
 	}
 
+	/**
+	 * Checks for a dominant or major Seventh
+	 */
+	public boolean hasSeven() {
+		return has[10] || has[11];
+	}
+
+	/**
+	 * Checks for a tritone (sixth scale degree). Equivalent to hasFlatFive()
+	 */
+	public boolean hasTritone() {
+		return has[6];
+	}
+
 	/* Specific Checks */
 
 	public boolean hasMinorThird() {
 		return has[3];
 	}
 
-	public boolean hasMajorThird() { return !hasMinorThird() && has[4]; }
+	public boolean hasMajorThird() { return has[4]; }
 
 	public boolean hasPerfectFifth() { return has[7]; }
 
-	public boolean hasFlatFive() { return !hasPerfectFifth() && has[6]; }
+	public boolean hasFlatFive() { return has[6]; }
 
-	public boolean hasAugmentedFifth() { return !hasFlatFive() && has[8]; }
+	public boolean hasAugmentedFifth() { return has[8]; }
+
+	public boolean hasDominantSeven() { return has[10]; }
+
+	public boolean hasMajorSeven() { return has[11]; }
+
+	public boolean hasMajorSix() {
+		return has[9];
+	}
+
+	public boolean hasMinorSecond() {
+		return has[1];
+	}
+
 
 
 }

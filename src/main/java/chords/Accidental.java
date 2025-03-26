@@ -1,10 +1,6 @@
+package chords;
 
-interface AccidentalInterface {
-	int pitchMod();
-	String toString();
-}
-
-public enum Accidental implements AccidentalInterface {
+public enum Accidental implements IAccidental {
 	DOUBLE_FLAT {
 		@Override
 		public String toString() {

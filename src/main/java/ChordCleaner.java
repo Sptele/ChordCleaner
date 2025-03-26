@@ -1,10 +1,15 @@
+import chords.Accidental;
+import chords.Chord;
+import chords.Note;
+import theory.Theorist;
+
 public class ChordCleaner {
 	public static void main(String[] args) {
 
 
 		Chord c = new Chord();
 
-		c.addNote(new Note('C', Accidental.FLAT, 3));
+		c.addNote(new Note('C', Accidental.NATURAL, 3));
 		c.addNote(new Note('D', 3));
 		c.addNote(new Note('E', 3));
 		c.addNote(new Note('F', 3));
@@ -12,7 +17,10 @@ public class ChordCleaner {
 		c.addNote(new Note('A', 3));
 		c.addNote(new Note('B', 3));
 
-		System.out.println(c.toString());
+		Theorist theory = new Theorist(c);
+
+		System.out.println(theory.getChordValue());
+		System.out.println(c);
 
 	}
 

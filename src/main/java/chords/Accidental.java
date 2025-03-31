@@ -2,13 +2,14 @@ package chords;
 
 import javax.accessibility.AccessibleIcon;
 
-public enum Accidental implements IAccidental {
+public enum Accidental {
 	DOUBLE_FLAT {
 		@Override
 		public String toString() {
 			return "♭♭";
 		}
 
+		@Override
 		public int pitchMod() {
 			return -2;
 		}
@@ -18,6 +19,7 @@ public enum Accidental implements IAccidental {
 			return "♭";
 		}
 
+		@Override
 		public int pitchMod() {
 			return -1;
 		}
@@ -27,6 +29,7 @@ public enum Accidental implements IAccidental {
 			return "♮";
 		}
 
+		@Override
 		public int pitchMod() {
 			return 0;
 		}
@@ -37,6 +40,7 @@ public enum Accidental implements IAccidental {
 			return "#";
 		}
 
+		@Override
 		public int pitchMod() {
 			return 1;
 		}
@@ -46,10 +50,19 @@ public enum Accidental implements IAccidental {
 			return "x";
 		}
 
+		@Override
 		public int pitchMod() {
 			return 2;
 		}
 	};
+
+	public int pitchMod() {
+		return 0;
+	}
+
+	public String toString() {
+		return super.toString();
+	}
 
 	public static Accidental from(String aStr) {
 		return switch (aStr) {

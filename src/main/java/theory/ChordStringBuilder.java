@@ -23,7 +23,7 @@ public class ChordStringBuilder {
 			int diff = priority.compareTo(o.priority);
 
 			// Sort by priority, then lexographically
-			return diff != 0 ? diff : priority.customComparator(el, o.el);
+			return diff != 0 ? diff : priority.compareTo(el, o.el);
 		}
 
 		@Override

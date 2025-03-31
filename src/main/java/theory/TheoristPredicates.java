@@ -45,6 +45,8 @@ public class TheoristPredicates {
 		return has[6];
 	}
 
+	public boolean hasADominantSeventh() { return hasDominantSeven() || has[14] || has[17] || has[21]; }
+
 	/* Specific Checks */
 
 	public boolean hasMinorThird() {
@@ -70,6 +72,12 @@ public class TheoristPredicates {
 	public boolean hasMinorSecond() {
 		return has[1];
 	}
+
+	public boolean hasNine() { return has[14]; }
+
+	public boolean hasEleven() { return has[17]; }
+
+	public boolean hasThirteen() { return has[21]; }
 
 
 

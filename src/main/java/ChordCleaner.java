@@ -31,7 +31,7 @@ public class ChordCleaner {
 			Theorist theory = new Theorist(c);
 
 			System.out.println(theory.getChordValue());
-			System.out.println(c);
+			System.out.println(theory.getNotes().toString());
 
 			System.out.println();
 

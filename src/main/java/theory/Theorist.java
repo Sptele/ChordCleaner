@@ -96,45 +96,90 @@ public class Theorist {
 				chordStr.append(flatFive);
 			}
 
-			// Add/Sus 2/4
-			ChordElementPriority priority = predicates.hasThird() ? ADDITIONS : SUSPENSION;
-
-			if (predicates.getInterval(2)) {
-				chordStr.append(priority.of(2));
-			}
-
-			if (predicates.getInterval(5)) {
-				chordStr.append(priority.of(4));
-			}
 
 			// Sevens
 			if (predicates.hasSeven()) {
-				if (predicates.hasDominantSeven()) { // Takes priority --> auto added
-					chordStr.append(SEVENTH.of(7));
+				boolean dom = predicates.hasDominantSeven();
+
+				// Major takes priority
+				if (dom && predicates.hasMajorSeven()) {
+					dom = false;
 				}
 
-				if (predicates.hasMajorSeven()) { // becomes add7 if dominant seven exists
-					ChordStringBuilder.ChordElement seven =
-							!predicates.hasDominantSeven()
-							? SEVENTH.of("maj7")
-							: ADDITIONS.of(7);
-
-					chordStr.append(seven);
-				}
+				// 7, 9, 11, 13 dom / maj chords
+				if (predicates.hasNine()) {
+					if (predicates.hasEleven()) {
+						if (predicates.hasThirteen()) chordStr.append(SEVENTH.of(dom, 13));
+						else chordStr.append(SEVENTH.of(dom, 11));
+					} else chordStr.append(SEVENTH.of(dom, 9));
+				} else chordStr.append(SEVENTH.of(dom, 7));
 			}
 
 			if (predicates.hasMinorSecond()) chordStr.append(FLAT.of(9)); // b9
-			if (predicates.hasMajorSix()) chordStr.append(ADDITIONS.of(6)); // Six
 		} else {
 			// No Fifth --> All diatonic notes are add notes
 			for (ScaleDegree note : notes) {
-				// TODO: FIX | chordStr.append("add", 5).append(note.getScaleDegree(), 5);
+				// :)
+				int val = Integer.parseInt(note.getScaleDegreeToString().substring(1));
 
-				if (note.isDiatonic()) chordStr.append(ADDITIONS.of(0 /* Some number... zzzzz */));
+				val = switch (val) {
+					case 2 -> 9;
+					case 4 -> 11;
+					default -> val;
+				};
+
+
+
+				if (note.isDiatonic()) chordStr.append(ADDITIONS.of(val));
+				else chordStr.append(FLAT.of(val));
+
 			}
 		}
 
+		additions(predicates, chordStr);
+
 		return chordStr.toString();
+	}
+
+	private void additions(TheoristPredicates predicates, ChordStringBuilder chordStr) {
+		if (predicates.hasMajorSix()) chordStr.append(ADDITIONS.of(6)); // Six
+
+		// Add/Sus 2/4
+		ChordElementPriority priority = predicates.hasThird() ? ADDITIONS : SUSPENSION;
+
+		if (predicates.getInterval(2)) {
+			chordStr.append(priority.of(2));
+		}
+
+		if (predicates.getInterval(5)) {
+			chordStr.append(priority.of(4));
+		}
+
+		if (predicates.hasDominantSeven() && predicates.hasMajorSeven()) {
+			chordStr.append(ADDITIONS.of(7));
+		}
+
+
+		// b7
+		if (predicates.hasDominantSeven() && predicates.hasMajorSeven()) {
+			chordStr.append(ADDITIONS.of("b7"));
+		}
+
+		// 9 (no 7), 11, 13
+
+		if (predicates.hasNine() && !predicates.hasSeven()) {
+			chordStr.append(ADDITIONS.of(9));
+		}
+
+		if (predicates.hasEleven() && !(predicates.hasSeven() && predicates.hasNine())) {
+			chordStr.append(ADDITIONS.of(11));
+		}
+
+		if (predicates.hasThirteen() && !(predicates.hasSeven() && predicates.hasNine() && predicates.hasEleven())) {
+			chordStr.append(ADDITIONS.of(13));
+		}
+
+
 	}
 
 	private boolean[] intervals() {

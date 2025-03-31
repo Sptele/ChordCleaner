@@ -14,7 +14,7 @@ public class ScaleDegree extends Note {
 			"m3",  // Minor 3rd - 3
 			"M3",  // Major 3rd - 4
 			"P4",  // Perfect 4th -5
-			"A4/d5", // Augmented 4th / Diminished 5th (Tritone) - 6
+			"d5", // Augmented 4th / Diminished 5th (Tritone) - 6
 			"P5",  // Perfect 5th - 7
 			"m6",  // Minor 6th - 8
 			"M6",  // Major 6th - 9

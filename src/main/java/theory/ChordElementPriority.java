@@ -1,14 +1,18 @@
 package theory;
 
 enum ChordElementPriority {
-	NOTE, AUGMENT, SEVENTH, FLAT {
+	NOTE, AUGMENT, SEVENTH {
+		public ChordStringBuilder.ChordElement of(boolean dom, int el) {
+			return dom ? of(el) : of("maj" + el);
+		}
+	}, FLAT {
 		@Override
 		public ChordStringBuilder.ChordElement of(int el) {
 			return super.of("(b" + el + ")");
 		}
 
 		@Override
-		public int customComparator(String a, String b) {
+		public int compareTo(String a, String b) {
 			int aNum = Integer.parseInt(a.substring(2).replace(")", ""));
 			int bNum = Integer.parseInt(b.substring(2).replace(")", ""));
 
@@ -28,7 +32,7 @@ enum ChordElementPriority {
 		}
 
 		@Override
-		public int customComparator(String a, String b) {
+		public int compareTo(String a, String b) {
 			int aNum = Integer.parseInt(a.substring(4));
 			int bNum = Integer.parseInt(b.substring(4));
 
@@ -41,7 +45,12 @@ enum ChordElementPriority {
 		}
 
 		@Override
-		public int customComparator(String a, String b) {
+		public ChordStringBuilder.ChordElement of(String el) {
+			return super.of("(add(" + el + "))");
+		}
+
+		@Override
+		public int compareTo(String a, String b) {
 			int aNum = Integer.parseInt(a.substring(4).replace(")", ""));
 			int bNum = Integer.parseInt(b.substring(4).replace(")", ""));
 
@@ -57,7 +66,9 @@ enum ChordElementPriority {
 		return new ChordStringBuilder.ChordElement("" + el, this);
 	}
 
-	public int customComparator(String a, String b) {
+	public ChordStringBuilder.ChordElement of(boolean bool, int el) { return of(el); }
+
+	public int compareTo(String a, String b) {
 		return a.compareTo(b);
 	}
 }

@@ -45,6 +45,11 @@ public class ScaleDegree extends Note {
 		this(note.getNote(), note.getAccidental(), note.getOctave(), -1);
 	}
 
+	public ScaleDegree(Note note, ScaleDegree root) {
+		this(note);
+		setScaleDegree(root);
+	}
+
 	public int getScaleDegree() {
 		return scaleDegree;
 	}

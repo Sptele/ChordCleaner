@@ -14,3 +14,8 @@ For example:
 > A3
 > Abb1
 > Ax3
+
+All notes should be entered on the same line, separated by a space. After pressing enter, the program will identify
+and output the chord.
+
+### This will NOT handle every type of chord, and will undoubtedly be wrong in some instances. Music theory, at a high level, is incredibly complex, and requires a neural network for more indepth insight.

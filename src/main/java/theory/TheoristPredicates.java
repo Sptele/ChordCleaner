@@ -75,10 +75,21 @@ public class TheoristPredicates {
 
 	public boolean hasNine() { return has[14]; }
 
+	public boolean hasFlatNine() { return has[13]; }
+
+	public boolean hasSharpNine() { return has[15]; }
+
 	public boolean hasEleven() { return has[17]; }
+
+	public boolean hasFlatEleven() { return has[16]; }
+
+	public boolean hasSharpEleven() { return has[18]; }
 
 	public boolean hasThirteen() { return has[21]; }
 
+	public boolean hasFlatThirteen() { return has[20]; }
+
+	public boolean hasSharpThirteen() { return has[22]; }
 
 
 }

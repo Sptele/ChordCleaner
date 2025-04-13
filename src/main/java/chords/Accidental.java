@@ -70,7 +70,8 @@ public enum Accidental {
 			case "♭", "b" -> FLAT;
 			case "#" -> SHARP;
 			case "##" -> DOUBLE_SHARP;
-			default -> NATURAL;
+			case "", "♮" -> NATURAL;
+			default -> null;
 		};
 	}
 }

@@ -3,6 +3,9 @@ package chords;
 import java.util.*;
 
 public class Chord {
+
+	public static final char[] VALID_NOTES = { 'A', 'B', 'C', 'D', 'E', 'F', 'G' };
+
 	private TreeSet<Note> notes;
 
 	public Chord() {
@@ -54,6 +57,8 @@ public class Chord {
 	public Note root() {
 		return notes.first();
 	}
+
+	public Note topNote() { return notes.last(); }
 
 	public void clear() {
 		notes.clear();

@@ -25,6 +25,16 @@ enum ChordElementPriority {
 		public ChordStringBuilder.ChordElement of(int el) {
 			return super.of("(#" + el + ")");
 		}
+
+		@Override
+		public int compareTo(String a, String b) {
+			int aNum = Integer.parseInt(a.substring(2).replace(")", ""));
+			int bNum = Integer.parseInt(b.substring(2).replace(")", ""));
+
+
+			return aNum - bNum;
+		}
+
 	}, SUSPENSION {
 		@Override
 		public ChordStringBuilder.ChordElement of(int el) {

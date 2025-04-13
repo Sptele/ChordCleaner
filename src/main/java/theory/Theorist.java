@@ -58,6 +58,8 @@ public class Theorist {
 		// Empty
 		if (notes.isEmpty()) return "";
 
+		if (chord.density() == 1) return notes.first().toString();
+
 		// Interval
 		if (chord.density() == 2)
 			return notes.last().getScaleDegree() != 6 ? notes.last().getScaleDegreeToString() : "Tritone";
@@ -114,31 +116,36 @@ public class Theorist {
 					} else chordStr.append(SEVENTH.of(dom, 9));
 				} else chordStr.append(SEVENTH.of(dom, 7));
 			}
-
-			if (predicates.hasMinorSecond()) chordStr.append(FLAT.of(9)); // b9
 		} else {
 			// No Fifth --> All diatonic notes are add notes
 			for (ScaleDegree note : notes) {
 				// :)
-				int val = Integer.parseInt(note.getScaleDegreeToString().substring(1));
+				int val = Integer.parseInt(note.getScaleDegreeToString().substring(1,2));
 
-				val = switch (val) {
-					case 2 -> 9;
-					case 4 -> 11;
-					default -> val;
-				};
-
-
-
-				if (note.isDiatonic()) chordStr.append(ADDITIONS.of(val));
+				if (note.isDiatonic() && note.getScaleDegree() == 0) chordStr.append(ADDITIONS.of(val));
 				else chordStr.append(FLAT.of(val));
 
 			}
 		}
 
 		additions(predicates, chordStr);
+		extensions(predicates, chordStr);
 
 		return chordStr.toString();
+	}
+
+	private void extensions(TheoristPredicates predicates, ChordStringBuilder chordStr) {
+		// Flats
+
+		if (predicates.hasFlatNine() || predicates.hasMinorSecond()) chordStr.append(FLAT.of(9));
+		if (predicates.hasFlatEleven()) chordStr.append(FLAT.of(11));
+		if (predicates.hasFlatThirteen()) chordStr.append(FLAT.of(13));
+
+		// Sharps
+
+		if (predicates.hasSharpNine()) chordStr.append(SHARP.of(9));
+		if (predicates.hasSharpEleven()) chordStr.append(SHARP.of(11));
+		if (predicates.hasSharpThirteen()) chordStr.append(SHARP.of(13));
 	}
 
 	private void additions(TheoristPredicates predicates, ChordStringBuilder chordStr) {
@@ -183,10 +190,10 @@ public class Theorist {
 	}
 
 	private boolean[] intervals() {
-		boolean[] has = new boolean[12];
+		boolean[] has = new boolean[99];
 
 		for (ScaleDegree note : notes) {
-			has[note.getScaleDegree() % 12] = true;
+			has[note.getScaleDegree()] = true;
 		}
 
 		return has;

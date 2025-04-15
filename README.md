@@ -2,7 +2,7 @@
 ### I need a better name for this
 
 Based on inputted Notes, this program analyzes them to identify the chord. This program does NOT support
-slash notation, and assumes that the lowest provided note is the bass. Still in progress.
+slash notation, and assumes that the lowest provided note is the bass.
 
 ## Run Instructions
 Run ChordCleaner.java to get the user interface. In the interface, you must provide each given note in the format:

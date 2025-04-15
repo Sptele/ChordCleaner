@@ -73,32 +73,6 @@ public class ScaleDegree extends Note {
 		return INTERVALS[clampedToOctave] + octaveMark;
 	}
 
-	public boolean isDiatonic() {
-		int pitchClass = toMIDI() - 12 * (getOctave() + 1);
-
-		if (pitchClass > 4) pitchClass++;
-
-		return pitchClass % 2 == 0;
-	}
-
-
-//	public boolean has(int interval) {
-//		for (chords.Note note : notes) {
-//			if (note.getScaleDegree() == interval) return true;
-//		}
-//
-//		return false;
-//	}
-//
-//	public List<chords.Note> ofIntervalRange(int max) {
-//		return ofIntervalRange(1, max);
-//	}
-//
-//	public List<chords.Note> ofIntervalRange(int min, int max) {
-//		return notes.stream().filter((note -> min <= note.getScaleDegree() && note.getScaleDegree() < max)).collect(Collectors.toList());
-//	}
-
-
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;

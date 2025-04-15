@@ -1,7 +1,5 @@
 package chords;
 
-import javax.accessibility.AccessibleIcon;
-
 public enum Accidental {
 	DOUBLE_FLAT {
 		@Override
@@ -37,7 +35,7 @@ public enum Accidental {
 	}, SHARP {
 		@Override
 		public String toString() {
-			return "#";
+			return "♯";
 		}
 
 		@Override
@@ -68,8 +66,8 @@ public enum Accidental {
 		return switch (aStr) {
 			case "♭♭", "bb" -> DOUBLE_FLAT;
 			case "♭", "b" -> FLAT;
-			case "#" -> SHARP;
-			case "##" -> DOUBLE_SHARP;
+			case "#", "♯" -> SHARP;
+			case "##", "♯♯", "x", "\uD834\uDD2A" -> DOUBLE_SHARP;
 			case "", "♮" -> NATURAL;
 			default -> null;
 		};

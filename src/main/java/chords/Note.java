@@ -85,11 +85,15 @@ public class Note implements Comparable<Note> {
 	}
 
 	public int toMIDI() {
-		int adjustedNotePitch = note + ((note == 'A' || note == 'B') ? 7 : 0) -67 ; // ASCII puts A and B below the rest
+		int adjustedNotePitch = note + ((note == 'A' || note == 'B') ? 7 : 0) - 67 ; // ASCII puts A and B below the rest
 
-		int pitchClass = 2 * adjustedNotePitch + accidental.pitchMod();
+		int pitchClass = 2 * adjustedNotePitch;
 
-		if (pitchClass > 4) pitchClass--;
+		if (pitchClass > 4) pitchClass--; // We need to calibrate for enharmonics
+
+		pitchClass += accidental.pitchMod(); // THEN, we adjust for accidentals
+
+
 
 		return 12 * (getOctave() + 1) + pitchClass;
 	}

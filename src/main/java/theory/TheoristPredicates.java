@@ -31,6 +31,8 @@ public class TheoristPredicates {
 		return has[3] || has[4];
 	}
 
+	public boolean hasFourth() { return has[5]; }
+
 	/**
 	 * Checks for a dominant or major Seventh
 	 */
@@ -48,6 +50,10 @@ public class TheoristPredicates {
 	public boolean hasADominantSeventh() { return hasDominantSeven() || has[14] || has[17] || has[21]; }
 
 	/* Specific Checks */
+
+	public boolean hasMajorSecond() {
+		return has[2];
+	}
 
 	public boolean hasMinorThird() {
 		return has[3];

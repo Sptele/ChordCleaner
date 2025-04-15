@@ -6,7 +6,6 @@ import chords.Note;
 import java.util.Iterator;
 import java.util.TreeSet;
 
-
 import static theory.ChordElementPriority.*;
 
 public class Theorist {
@@ -67,65 +66,51 @@ public class Theorist {
 		/* Logic */
 
 		ChordStringBuilder chordStr = new ChordStringBuilder(chord.root().getNote() + "" + chord.root().getAccidental());
-
 		TheoristPredicates predicates = new TheoristPredicates(intervals()); // Descriptive methods to check
 
-		if (predicates.hasFifth()) { // Has a P5 -> W chord
+		// Minor Third
+		if (predicates.hasMinorThird()) {
+			chordStr.pollToLowerCase(); // Show Minor by lower case
+		}
 
-			// Minor Third
-			if (predicates.hasMinorThird()) {
-				chordStr.pollToLowerCase(); // Show Minor by lower case
+		// Augmented Fifth / b13
+		if (predicates.hasAugmentedFifth()) { // Major + Augmented Fifth
+			chordStr.append(
+					!predicates.hasPerfectFifth() // No Perfect Fifth
+							&& !predicates.hasFlatFive() // No Flat Five
+							&& (!predicates.hasMinorThird() && predicates.hasMajorThird()) // Major Third
+							? AUGMENT.of("+")
+							: FLAT.of(13)
+			);
+		}
+
+		// Flat 5 or Diminished Five based on Third
+		if (predicates.hasFlatFive()) {
+			ChordStringBuilder.ChordElement flatFive =
+					predicates.hasMinorThird() && !predicates.hasPerfectFifth()
+							? AUGMENT.of("°")
+							: FLAT.of(5);
+
+			chordStr.append(flatFive);
+		}
+
+
+		// Sevens
+		if (predicates.hasSeven()) {
+			boolean dom = predicates.hasDominantSeven();
+
+			// Major takes priority
+			if (dom && predicates.hasMajorSeven()) {
+				dom = false;
 			}
 
-			// Augmented Fifth / b13
-			if (predicates.hasAugmentedFifth()) { // Major + Augmented Fifth
-				chordStr.append(
-						!predicates.hasPerfectFifth() // No Perfect Fifth
-								&& !predicates.hasFlatFive() // No Flat Five
-								&& (!predicates.hasMinorThird() && predicates.hasMajorThird()) // Major Third
-								? AUGMENT.of("+")
-								: FLAT.of(13)
-				);
-			}
-
-			// Flat 5 or Diminished Five based on Third
-			if (predicates.hasFlatFive()) {
-				ChordStringBuilder.ChordElement flatFive =
-						predicates.hasMinorThird() && !predicates.hasPerfectFifth()
-								? AUGMENT.of("°")
-								: FLAT.of(5);
-
-				chordStr.append(flatFive);
-			}
-
-
-			// Sevens
-			if (predicates.hasSeven()) {
-				boolean dom = predicates.hasDominantSeven();
-
-				// Major takes priority
-				if (dom && predicates.hasMajorSeven()) {
-					dom = false;
-				}
-
-				// 7, 9, 11, 13 dom / maj chords
-				if (predicates.hasNine()) {
-					if (predicates.hasEleven()) {
-						if (predicates.hasThirteen()) chordStr.append(SEVENTH.of(dom, 13));
-						else chordStr.append(SEVENTH.of(dom, 11));
-					} else chordStr.append(SEVENTH.of(dom, 9));
-				} else chordStr.append(SEVENTH.of(dom, 7));
-			}
-		} else {
-			// No Fifth --> All diatonic notes are add notes
-			for (ScaleDegree note : notes) {
-				// :)
-				int val = Integer.parseInt(note.getScaleDegreeToString().substring(1,2));
-
-				if (note.isDiatonic() && note.getScaleDegree() == 0) chordStr.append(ADDITIONS.of(val));
-				else chordStr.append(FLAT.of(val));
-
-			}
+			// 7, 9, 11, 13 dom / maj chords
+			if (predicates.hasNine()) {
+				if (predicates.hasEleven()) {
+					if (predicates.hasThirteen()) chordStr.append(SEVENTH.of(dom, 13));
+					else chordStr.append(SEVENTH.of(dom, 11));
+				} else chordStr.append(SEVENTH.of(dom, 9));
+			} else chordStr.append(SEVENTH.of(dom, 7));
 		}
 
 		additions(predicates, chordStr);
@@ -154,11 +139,11 @@ public class Theorist {
 		// Add/Sus 2/4
 		ChordElementPriority priority = predicates.hasThird() ? ADDITIONS : SUSPENSION;
 
-		if (predicates.getInterval(2)) {
+		if (predicates.hasMajorSecond()) {
 			chordStr.append(priority.of(2));
 		}
 
-		if (predicates.getInterval(5)) {
+		if (predicates.hasFourth()) {
 			chordStr.append(priority.of(4));
 		}
 
@@ -193,7 +178,7 @@ public class Theorist {
 		boolean[] has = new boolean[99];
 
 		for (ScaleDegree note : notes) {
-			has[note.getScaleDegree()] = true;
+			has[note.getScaleDegree() % 24 /* clamp to two octaves */] = true;
 		}
 
 		return has;
